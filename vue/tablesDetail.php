@@ -7,9 +7,8 @@
 */
     session_start();
 
-        $idContainer = null;
-        $idContainer = $_GET['id'];
-        $_SESSION['idContainer']=$idContainer;
+$idContainer=$_SESSION['idContainer'];
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +22,7 @@
         <title>Details</title>
 
         <script src="../control/displayContainers.js"></script>
-        <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
         <script src="bootstrap/js/jquery-1.10.2.js"></script> 
         <script src="bootstrap/js/bootstrap.js"></script> 
@@ -65,7 +64,7 @@
                             <a href="dashboard.php">Dashboard</a>
                         </li>
                         <li>
-                            <a id="refresh" href="./pageDetail.php?id=<?php echo $idContainer ?>" >Refresh</a>
+                            <a id="refresh" href="./tablesDetail.php" >Refresh</a>
                         </li>
                         <li>
                             <a href="#">Settings</a>
@@ -85,50 +84,56 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-               <div id="wrapper">
-                    <div id="sidebar-wrapper">
+                <div id="wrapper">
+                     <div id="sidebar-wrapper">
                         <div class="sidebar-nav">
                             <h2>Menu</h2>
                             <hr></hr>
                             <ul class = "nav nav-sidebar">
-                                <li class = "active">
+                                <li>
                                     <a href="./pageDetail.php?id=<?php echo $idContainer ?>"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                                 </li>
-                                <li>
+                                <li  class = "active">
                                     <a href="tablesDetail.php"><i class="fa fa-fw fa-table"></i> Tables</a>
                                 </li>
                                 </ul>
                         <hr style="height: 2px; color: #000000; background-color: #000000; width: 50%; border: none;"> 
-                    <h4>Details</h4>
+                    <h4>Menu</h4>
                     <div id="details">
                         
                     </div>
                     <hr style="height: 2px; color: #000000; background-color: #000000; width: 50%; border: none;"> 
-                     <div id="map-container"></div>
                     
-                   
+                    <div id="map-container"></div>
                 </div>
-                 </div>
-                 <div id="page-content-wrapper">
-                    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
-               <hr>
-                <div class=" col-xs-10 col-sm-10">
-                    <div class="container-fluid">
+                </div>
+        <div id="page-content-wrapper">
+            <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
                     	<!--Division which contain the graph -->
-                    	<div id="contChart"  width ='100%' style="height:600px ;margin: 0 auto">
-
-                    	</div>
-    				</div>
-
-                    <input type="radio" name="mychart" class="mychart" id= "radio1" value="line" checked>Line</inuput>
-                    <input type="radio" name="mychart" class="mychart" id= "radio2" value="column"  >Column</inuput>
+                 <hr></hr>
+				<div class="table-responsive col-xs-10 col-md-10 col-md-offset-1 ">
+                    <table class="display table" width ="100%" id="myTable">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Values</th>
+                      </tr>
+                    </thead>
+                    <tbody id="myBody">
+                    <tr>
+                       <td><div id="resDate"> </div></td>
+                       <td><div id="resType"></div></td>
+                       <td><div id="resValue"> </div></td>
+                    </tr>
+                    </tbody>
+                    </table>
                 </div>
-                 
+               
 
-                </div>
-				
-         </div>
-    </div>
+            </div>
+        </div>
+     </div>
 </div>
         <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -155,9 +160,8 @@
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script src="http://code.highcharts.com/modules/solid-gauge.js"></script>
 <script src="../control/initiateGrid.js"></script>
-<script src="../control/myCharts.js"></script>
+<script src="../control/tableDetail.js"></script>
 <script type="text/javascript" language="javascript" src="../control/jquery.dataTables.js"></script>
-
 <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
