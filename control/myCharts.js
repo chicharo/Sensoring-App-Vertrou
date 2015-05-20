@@ -22,6 +22,7 @@
           
           
           });
+        $('#myTable').dataTable();
         //Is the container a double type?
         for(i=0;i<containerAllValues.length;i++){
             if(containerAllValues[i][1]!=containerAllValues[0][1]){
@@ -128,7 +129,7 @@
                     bool = false;
                 }
 
-                initiateTabTwo();
+               // initiateTabTwo();
                 initiateDetailsTwo(type1, type2, title, dataTabFin1, dataTabFin2, datesTab);
             }
             else{
@@ -138,7 +139,7 @@
                     dataTabFin1[i] = Math.floor(containerAllValues[i][0]);        
                 }
 
-                initiateTab();
+                //initiateTab();
                 initiateDetails(type1, title, dataTabFin1, datesTab);
                 
             }
@@ -150,13 +151,61 @@
 
                     changeChartType(true);
 
+                    
+                    
+                        
+                    
+                    
+
                 }
             }
+            initiateTable();
+            initiateDetail();
+
     }
 
 
 
   });     
+    function initiateDetail(){
+
+    $.ajax({
+
+      dataType: "json",
+      url: '../model/getDetail.php',
+
+      success: function(result){
+        var text;
+        result.forEach(function(d){
+          text = document.createTextNode(d.details);
+        });
+
+        div = document.getElementById('details');
+        div.appendChild(text);
+      }
+    });
+        
+
+    }
+
+    function initiateTable(){
+        dataTable = $('#myTable').DataTable();
+        dataTable.destroy();
+        dataTable = $('#myTable').DataTable( {
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                url :"../model/getValuesTable.php", // json datasource
+                type: "post",  // method  , by default get
+                error: function(){  // error handling
+                    $(".myTable").html("");
+                    $("#myTable").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+                    $("#myTable_processing").css("display","none");
+ 
+                }
+            }
+        } );
+    }
 
     /**
      * Initiate the chart of the container with two types (he contain 2 containers)
@@ -309,7 +358,6 @@ function init_map() {
        */
       success: function(result){
         
-        
         result.forEach(function(d){
           longitude = d.geolong;
           latitude = d.geolat;
@@ -317,7 +365,6 @@ function init_map() {
         });
         if(longitude!=null && latitude != null){
           var var_location = new google.maps.LatLng(latitude,longitude);
-         
         var var_mapoptions = {
           center: var_location,
           zoom: 14
@@ -326,7 +373,7 @@ function init_map() {
     var var_marker = new google.maps.Marker({
       position: var_location,
             map: var_map,
-      title:"Venice"});
+      title:"Location"});
  
         var var_map = new google.maps.Map(document.getElementById("map-container"),
             var_mapoptions);

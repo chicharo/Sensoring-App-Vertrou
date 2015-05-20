@@ -15,7 +15,7 @@
 }
 
 #wrapper.toggled {
-    padding-left: 150px;
+    padding-left: 180px;
 }
 
 #sidebar-wrapper {
@@ -35,7 +35,7 @@
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 160px;
+    width: 180px;
     padding-left: 10px;
 }
 
@@ -65,7 +65,7 @@
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 150px;
+        padding-left: 180px;
     }
 
     #wrapper.toggled {
@@ -73,7 +73,7 @@
     }
 
     #sidebar-wrapper {
-        width: 160px;
+        width: 180px;
         padding-left: 10px;
     }
 
