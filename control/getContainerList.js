@@ -60,8 +60,14 @@ $(document).ready(function(){
               textButton = document.createTextNode("x");
               buttonClose.appendChild(textButton);
 
+              spanType = document.createElement("span");
+              spanType.className = "label label-default";
+               textType = document.createTextNode(items[i][1] + "&" + items[i+1][1]);
+              spanType.appendChild(textType);
+
+
               span = document.createElement("span");
-              span.className = "label label-default";
+              span.className = "label label-primary";
                text = document.createTextNode(items[i][2] + "&" + items[i+1][2]);
               span.appendChild(text);
               
@@ -97,6 +103,7 @@ $(document).ready(function(){
 
 
               content.appendChild(buttonClose);
+              content.appendChild(spanType);
               content.appendChild(span);
               content.appendChild(div);
               content.appendChild(divAlert);
@@ -137,8 +144,13 @@ $(document).ready(function(){
                textButton = document.createTextNode("x");
               buttonClose.appendChild(textButton);
 
+              spanType = document.createElement("span");
+              spanType.className = "label label-default";
+               textType = document.createTextNode(items[i][1]);
+              spanType.appendChild(textType);
+
               span = document.createElement("span");
-              span.className = "label label-default";
+              span.className = "label label-primary";
               text = document.createTextNode(items[i][2]);
               span.appendChild(text);
 
@@ -156,6 +168,7 @@ $(document).ready(function(){
 
 
               content.appendChild(buttonClose);
+              content.appendChild(spanType);
               content.appendChild(span);
               content.appendChild(div);
               content.appendChild(divAlert);

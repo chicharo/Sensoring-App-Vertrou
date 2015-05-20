@@ -113,7 +113,7 @@
                  <div id="page-content-wrapper">
                     <a href="#menu-toggle" class="glyphicon glyphicon-th-list" id="menu-toggle"></a>
                <hr>
-                <div class=" col-xs-10 col-sm-10">
+                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-10">
                     <div class="container-fluid">
                     	<!--Division which contain the graph -->
                     	<div id="contChart"  width ='100%' style="height:600px ; min-width: 310px;margin: 0 auto">
@@ -124,9 +124,9 @@
                     <input type="radio" name="mychart" class="mychart" id= "radio1" value="line" checked>Line</inuput>
                     <input type="radio" name="mychart" class="mychart" id= "radio2" value="column"  >Column</inuput>
                 </div>
-                <div class=" col-xs-2 col-sm-2">
+                <div class=" col-xs-12 col-md-12 col-lg-2">
                     <div class="container-fluid">
-                        <svg id="fillgauge" width="97%" height="250"></svg>
+                        <svg id="fillgauge" height="50%"></svg>
                      </div>
                 
                 </div>   
@@ -174,6 +174,6 @@
     });
     </script>
     
- 
+
     </footer>
 </html>
