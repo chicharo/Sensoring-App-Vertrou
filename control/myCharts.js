@@ -25,7 +25,7 @@
           
           
           });
-        $('#myTable').dataTable();
+        
         //Is the container a double type?
         for(i=0;i<containerAllValues.length;i++){
             if(containerAllValues[i][1]!=containerAllValues[0][1]){
