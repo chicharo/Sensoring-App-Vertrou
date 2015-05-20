@@ -108,7 +108,7 @@ $idContainer=$_SESSION['idContainer'];
                 </div>
                 </div>
         <div id="page-content-wrapper">
-            <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
+            <a href="#menu-toggle" class="glyphicon glyphicon-th-list" id="menu-toggle"></a>
                     	<!--Division which contain the graph -->
                  <hr></hr>
 				<div class="table-responsive col-xs-10 col-md-10 col-md-offset-1 ">

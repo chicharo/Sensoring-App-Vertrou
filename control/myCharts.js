@@ -5,7 +5,9 @@
         var containerAllValues = [];
         /**Is the container a double type?*/
         var isDoubleType = false;
+        var json;
 
+        var last_value1;
         $.ajax({
       dataType: "json",
       url: '../model/getAllValues.php',
@@ -17,6 +19,7 @@
        * @return the table containerAllValues which contain the values (and other specifications) of the container(s)
        */
       success: function(result){
+        json=result;
         result.forEach(function(d){
           containerAllValues.push([d.value,d.content_type_container,d.name, d.date]);
           
@@ -136,7 +139,8 @@
                 title = containerAllValues[0][2];
                 type1 = containerAllValues[0][1];
                 for(i=0;i<containerAllValues.length;i++){
-                    dataTabFin1[i] = Math.floor(containerAllValues[i][0]);        
+                    dataTabFin1[i] = Math.floor(containerAllValues[i][0]);
+                    last_value1 = Math.floor(containerAllValues[i][0]);       
                 }
 
                 //initiateTab();
@@ -161,12 +165,36 @@
             }
             initiateTable();
             initiateDetail();
+            initiateGauge();
 
     }
 
 
 
-  });     
+  });    
+
+    function initiateGauge(){
+        var max_value1;
+        $.ajax({
+
+      dataType: "json",
+      url: '../model/getDetail.php',
+
+      success: function(result){
+        var text;
+        result.forEach(function(d){
+            max_value1 = d.max_value;
+        });
+
+
+        mx_value1 = Math.floor(max_value1);
+        percentage = (last_value1/mx_value1)*100;
+        x = Math.ceil(percentage);
+        loadLiquidFillGauge("fillgauge", x);
+      }
+    });
+       
+    } 
     function initiateDetail(){
 
     $.ajax({
@@ -177,6 +205,7 @@
       success: function(result){
         var text;
         result.forEach(function(d){
+            max_value1 = d.max_value;
           text = document.createTextNode(d.details);
         });
 
@@ -269,42 +298,86 @@
  * @param {} datesTab Table which contain the dates of values.
  */
 function initiateDetails(type, title, dataTab, datesTab) {
+    var chart;
+        $(function () {
 
-        var chart;
-    $('#contChart').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-            categories: datesTab
-        },
-        yAxis: {
-            title: {
-                text: 'Volume (m3)'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
+    $.getJSON('http://localhost/Sensoring-App-Vertrou/model/getJson.php', function (data) {
+
+        // Create a timer
+        var start = +new Date();
+
+        // Create the chart
+        $('#contChart').highcharts('StockChart', {
+            chart: {
+                events: {
+                    load: function () {
+                        if (!window.isComparing) {
+                            this.setTitle(null, {
+                                text: 'Built chart in ' + (new Date() - start) + 'ms'
+                            });
+                        }
+                    }
                 },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: type,
-            data: []
-        }]
-    });
-    chart = $('#contChart').highcharts();
-    chart.series[0].setData(dataTab);
+                zoomType: 'x'
+            },
 
+            rangeSelector: {
+                
+                buttons: [{
+                    type: 'day',
+                    count: 3,
+                    text: '3d'
+                }, {
+                    type: 'week',
+                    count: 1,
+                    text: '1w'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1m'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6m'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }],
+                selected: 3
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Volume(Liters)'
+                }
+            },
+
+            title: {
+                text: type + ' : ' + title
+            },
+
+            subtitle: {
+                text: type // dummy text to reserve space for dynamic subtitle
+            },
+
+            series: [{
+                name: type+' (Liters)',
+                data: data,
+                pointStart: Date.UTC(2015, 4, 28),
+                pointInterval: 3600 * 1000,
+                tooltip: {
+                    valueDecimals: 1,
+                    valueSuffix: 'L'
+                }
+            }]
+
+        });
+    });
+});
 };
 
 /**
