@@ -46,6 +46,7 @@
                 height : 200px;
                 width: 150px;
             }
+            .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
         </style>
     </head>
     <body>
@@ -88,7 +89,7 @@
                <div id="wrapper">
                     <div id="sidebar-wrapper">
                         <div class="sidebar-nav">
-                            <h2>Menu</h2>
+                           
                             <hr></hr>
                             <ul class = "nav nav-sidebar">
                                 <li class = "active">
@@ -110,19 +111,25 @@
                 </div>
                  </div>
                  <div id="page-content-wrapper">
-                    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
+                    <a href="#menu-toggle" class="glyphicon glyphicon-th-list" id="menu-toggle"></a>
                <hr>
                 <div class=" col-xs-10 col-sm-10">
                     <div class="container-fluid">
                     	<!--Division which contain the graph -->
-                    	<div id="contChart"  width ='100%' style="height:600px ;margin: 0 auto">
+                    	<div id="contChart"  width ='100%' style="height:600px ; min-width: 310px;margin: 0 auto">
 
                     	</div>
     				</div>
-
+                    
                     <input type="radio" name="mychart" class="mychart" id= "radio1" value="line" checked>Line</inuput>
                     <input type="radio" name="mychart" class="mychart" id= "radio2" value="column"  >Column</inuput>
                 </div>
+                <div class=" col-xs-2 col-sm-2">
+                    <div class="container-fluid">
+                        <svg id="fillgauge" width="97%" height="250"></svg>
+                     </div>
+                
+                </div>   
                  
 
                 </div>
@@ -150,13 +157,15 @@
         <script src="../control/gridstack.js"></script>
         <script type="text/javascript" src="bootstrap/js/parseAjax.js"></script>
     <script type="text/javascript" src="bootstrap/js/popup.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+    
 <script src="http://code.highcharts.com/modules/solid-gauge.js"></script>
 <script src="../control/initiateGrid.js"></script>
 <script src="../control/myCharts.js"></script>
 <script type="text/javascript" language="javascript" src="../control/jquery.dataTables.js"></script>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+<script src="../control/liquidFillGauge.js" language="JavaScript"></script>
 
 <script>
     $("#menu-toggle").click(function(e) {
@@ -164,6 +173,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-
+    
+ 
     </footer>
 </html>
