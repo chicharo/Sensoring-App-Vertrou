@@ -22,14 +22,13 @@ SELECT `id_container`,`content_type_container`,`value`,`date`
   FROM `Datas` WHERE `date` IN (SELECT MAX( `date` )
                                 FROM `Datas` WHERE `id_container` 
                                 IN (Select `id_container`FROM `BelongsTo`
-                                     where `id_owner` = '$idUsr')
+                                     where `id_owner` = :idUsr)
                                 GROUP BY `id_container`,`content_type_container`
   )
   ORDER BY `id_container` ASC , `date` DESC
 ");
 
 $query->execute(array(
-	'idCont'=>$idCont,
 	'idUsr'=>$idUsr
 ));
 
