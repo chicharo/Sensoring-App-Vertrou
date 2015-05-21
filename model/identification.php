@@ -2,7 +2,7 @@
     
 /**
 *@author Olivier Peurichard & Etienne Marois
-*/
+*/  
     session_start();
 
     /**
@@ -10,7 +10,7 @@
     */
 include('../model/connectionDB.php');
     
-$userN = mysql_real_escape_string($_POST['username']);
+$userN = ($_POST['username']);
 $pass = htmlspecialchars($_POST['password']);
 
 //$userN = 'Etienne';

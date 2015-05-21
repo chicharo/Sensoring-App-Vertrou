@@ -21,7 +21,6 @@ var k =0;
 var nb_page = 0;
 
 $(document).ready(function(){
-  var items = [];
     $.ajax({
       dataType: "json",
       url: '../model/getContainers.php',
@@ -505,13 +504,59 @@ function getLastValues(){
               id = containersLastValues[i][0]+containersLastValues[i][1];
               var intvalue = Math.floor( containersLastValues[i][2] );
               
+              
 
-              $('#'+id).highcharts().series[0].points[0].update(intvalue);    
+              $('#'+id).highcharts().series[0].points[0].update(intvalue);  
+
+              for(j=0;j<items.length;j++){
+                if(items[j][0]+items[j][1]==containersLastValues[i][0]+containersLastValues[i][1]){
+                  if(i<(containersLastValues.length-1) && containersLastValues[i][0]==containersLastValues[i+1][0]){
+                    if(items[j][0]==items[j+1][0]){
+                      var intvalue2 = Math.floor( containersLastValues[i+1][2] );
+                      var alertvalue = items[j][4];
+                      var alertvalue2 = items[j+1][4];
+
+                      if(intvalue<=alertvalue || intvalue2<=alertvalue2){
+                        $('#alert'+items[j][0]).show();
+                      }
+                      else{
+                        $('#alert'+items[j][0]).hide();
+                      }
+                    }
+                    else{
+                      var intvalue2 = Math.floor( containersLastValues[i+1][2] );
+                      var alertvalue = items[j][4];
+                      var alertvalue2 = items[j-1][4];
+
+                      if(intvalue<=alertvalue || intvalue2<=alertvalue2){
+                        $('#alert'+items[j-1][0]).show();
+                      }
+                      else{
+                        $('#alert'+items[j-1][0]).hide();
+                      }
+                    }
+                  }
+                  else if(containersLastValues[i][0]==containersLastValues[i-1][0]){
+
+                  }
+                  else{
+                    var alertvalue = items[j][4];
+                    if(intvalue<=alertvalue || intvalue2<=alertvalue2){
+                        $('#alert'+items[j][0]).show();
+                      }
+                      else{
+                        $('#alert'+items[j][0]).hide();
+                      }
+                  }
+                }
+              }
+                
+              
             }
-    }
+          }
 
   });
-  setTimeout(getLastValues,10000);
+  //setTimeout(getLastValues,10000);
 };
    
         /**

@@ -11,10 +11,19 @@ $(document).ready( function () {
 					document.location.href="../vue/dashboard.php";
 					// on désactive l'affichage du formulaire et on affiche un message de bienvenue à la place
 				}
-				else// si la connexion en php n'a pas fonctionnée
+				else if(msg==0)// si la connexion en php n'a pas fonctionnée
 				{
 					$("span#error").html("Connection error, please check your login and password.");
 					// on affiche un message d'erreur dans le span prévu à cet effet
+				}
+				else if(msg==2){
+					$("span#error").html("Blabla ca renvoie 2");
+				}
+				else if(msg==4){
+					$("span#error").html("Bim 4");
+				}
+				else{
+					alert(msg);
 				}
 		   }
 		});
