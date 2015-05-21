@@ -8,6 +8,17 @@
         var json;
 
         var last_value1;
+
+displayChart();
+
+function displayChart(){
+    containerAllValues = [];
+
+    handlingAjax();
+    setTimeout(displayChart,20000);
+}
+function handlingAjax(){
+
         $.ajax({
       dataType: "json",
       url: '../model/getAllValues.php',
@@ -171,7 +182,8 @@
 
 
 
-  });    
+  });
+} 
 
     function initiateGauge(){
         var max_value1;
@@ -194,9 +206,10 @@
       }
     });
        
-    } 
+    }
+    var myBool = false;
     function initiateDetail(){
-
+    if(myBool==false){
     $.ajax({
 
       dataType: "json",
@@ -213,7 +226,8 @@
         div.appendChild(text);
       }
     });
-        
+    }
+    myBool = true;  
 
     }
 

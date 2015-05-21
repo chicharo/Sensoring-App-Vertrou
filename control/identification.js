@@ -7,7 +7,7 @@ $(document).ready( function () {
 		   success: function(msg){ // si l'appel a bien fonctionné
 				if(msg==1) // si la connexion en php a fonctionnée
 				{
-					$("div#connexion").html("<span id=\"confirmMsg\">Vous &ecirc;tes maintenant connect&eacute;.</span>");
+					$("div#connexion").html("<span id=\"confirmMsg\">Connection ...</span>");
 					document.location.href="../vue/dashboard.php";
 					// on désactive l'affichage du formulaire et on affiche un message de bienvenue à la place
 				}

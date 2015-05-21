@@ -5,6 +5,7 @@
 /**
 *Take the id of the container 
 */
+
     session_start();
 
 $idContainer=$_SESSION['idContainer'];

@@ -6,6 +6,7 @@
 */
 $adoc;
 session_start();
+
  
 /**
 *Delete the session variable

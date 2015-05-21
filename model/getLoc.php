@@ -8,11 +8,13 @@ $adoc;
 include('connectionDB.php');
 
 session_start();
+
+$idCont = intval($_SESSION['idContainer']);
 //recuperation of containers
 	/**
 	*Prepare the SQL query
 	*/
-    $statement = $bdd->prepare("SELECT DISTINCT `geolat`, `geolong` FROM `Containers` WHERE id = '".$_SESSION['idContainer']."'");
+    $statement = $bdd->prepare("SELECT DISTINCT `geolat`, `geolong` FROM `Containers` WHERE id = '$idCont'");
     $statement->execute();
     /**
     *Result of query

@@ -1,10 +1,30 @@
 $(document).ready(function(){
 
-initiateTable();
-initiateDetail();
-init_map();
+displayTable();
 
+var lenghtTable = 0;
+var tmpLength = -1;
 
+function displayTable(){
+  initiateDetail();
+  init_map();
+  $.ajax({
+      url: '../model/countAllValues.php',
+
+      success: function(c){
+        lenghtTable = Math.floor(c);
+      }
+    });
+  if(tmpLength!=lenghtTable || lenghtTable == null){
+    //alert(lenghtTable);
+    initiateTable();
+  }
+
+  if(lenghtTable!=null){
+    tmpLength = lenghtTable;
+  }
+  setTimeout(displayTable,5000);
+}
 
 function initiateTable(){
         dataTable = $('#myTable').DataTable();
@@ -24,9 +44,9 @@ function initiateTable(){
             }
         } );
     }
-
+    var isInitiate = false;
     function initiateDetail(){
-
+    if(isInitiate==false){
     $.ajax({
 
       dataType: "json",
@@ -42,8 +62,8 @@ function initiateTable(){
         div.appendChild(text);
       }
     });
-        
-
+    }   
+    isInitiate = true;
     }
 
     function init_map() {

@@ -486,7 +486,6 @@ function initiatePagination(){
  */
 function getLastValues(){
   var containersLastValues = [];
-
   $.ajax({
       dataType: "json",
       url: '../model/getLastValues.php',
@@ -512,6 +511,7 @@ function getLastValues(){
     }
 
   });
+  setTimeout(getLastValues,10000);
 };
    
         /**

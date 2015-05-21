@@ -10,19 +10,21 @@ $adoc;
 include('connectionDB.php');
 
 //To use the sessions values 
-session_start();
 
+session_start();
+$idCont = intval($_SESSION['idContainer']);
+$idUsr = intval($_SESSION['id_user']);
 /**
 *The SQL query
 */
 $sql = " 
         SELECT value,D.date, content_type_container
         FROM Datas D, BelongsTo B, Containers C
-        WHERE D.id_container = '".$_SESSION['idContainer']."'
+        WHERE D.id_container = '$idCont'
         AND D.id_container = B.id_container
         AND D.id_container = C.id
         AND D.content_type_container = C.content_type
-        AND id_owner = '".$_SESSION['id_user']."'
+        AND id_owner = '$idUsr'
         ORDER BY D.date
 ";
 

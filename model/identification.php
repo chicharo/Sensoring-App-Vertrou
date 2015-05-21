@@ -4,12 +4,13 @@
 *@author Olivier Peurichard & Etienne Marois
 */
     session_start();
+
     /**
     *Connection to database
     */
 include('../model/connectionDB.php');
     
-$userN = htmlspecialchars($_POST['username']);
+$userN = mysql_real_escape_string($_POST['username']);
 $pass = htmlspecialchars($_POST['password']);
 
 //$userN = 'Etienne';

@@ -9,12 +9,15 @@ include('connectionDB.php');
 
 
     //To use the sessions values
+
     session_start();
+
+$idUsr = intval($_SESSION['id_user']);
     /**
     *$sql contain the SQL Query
     */
     $sql = "
-SELECT `id`,`content_type`,`name`,`max_value`,`alert_value` FROM `Containers` WHERE `id` IN ( SELECT `id_container` FROM `BelongsTo` WHERE `id_owner` ='".$_SESSION['id_user']."')
+SELECT `id`,`content_type`,`name`,`max_value`,`alert_value` FROM `Containers` WHERE `id` IN ( SELECT `id_container` FROM `BelongsTo` WHERE `id_owner` ='$idUsr')
 ";
 /**
 *Launch the SQL query

@@ -10,11 +10,14 @@ include('connectionDB.php');
 
 //To use the sessions values
 session_start();
+
+$idCont = intval($_SESSION['idContainer']);
+$idUsr = intval($_SESSION['id_user']);
 /**
     *$sql contain the SQL Query
     */
     $sql = "
-SELECT DISTINCT id FROM Containers, BelongsTo WHERE id_owner ='".$_SESSION['id_user']."' AND id_container ='".$_SESSION['idContainer']."' AND id = id_container
+SELECT DISTINCT id FROM Containers, BelongsTo WHERE id_owner ='idUsr' AND id_container ='$idCont' AND id = id_container
 ";
 /**
 *Launch the SQL query
