@@ -15,9 +15,9 @@ $idUsr = intval($_SESSION['id_user']);
 
 $data = array(); 
 /**
-* $sql contain the query
+* contain amd launch the SQL query
 */
-$sql = "
+$query = $bdd->prepare("
 SELECT `id_container`,`content_type_container`,`value`,`date`
   FROM `Datas` WHERE `date` IN (SELECT MAX( `date` )
                                 FROM `Datas` WHERE `id_container` 
@@ -26,12 +26,12 @@ SELECT `id_container`,`content_type_container`,`value`,`date`
                                 GROUP BY `id_container`,`content_type_container`
   )
   ORDER BY `id_container` ASC , `date` DESC
-";
+");
 
-/**
-*Launch the query
-*/
-$query = $bdd->query($sql);
+$query->execute(array(
+	'idCont'=>$idCont,
+	'idUsr'=>$idUsr
+));
 
 /**
 *Store the query in an array and encode her to JSON format

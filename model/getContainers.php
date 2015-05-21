@@ -14,16 +14,17 @@ include('connectionDB.php');
 
 $idUsr = intval($_SESSION['id_user']);
     /**
-    *$sql contain the SQL Query
+    *Prepare and launch the SQL query
     */
-    $sql = "
-SELECT `id`,`content_type`,`name`,`max_value`,`alert_value` FROM `Containers` WHERE `id` IN ( SELECT `id_container` FROM `BelongsTo` WHERE `id_owner` ='$idUsr')
-";
-/**
-*Launch the SQL query
-*/
-    $query = $bdd->query($sql);
-    
+    //prepare
+    $query = $bdd->prepare("
+SELECT `id`,`content_type`,`name`,`max_value`,`alert_value` FROM `Containers` WHERE `id` IN ( SELECT `id_container` FROM `BelongsTo` WHERE `id_owner` = :idUsr)
+");
+    //launch
+    $query->execute(array(
+        'idUsr'=>$idUsr
+    ));   
+        
 /**
 *Store the query in an array and encode her to JSON format
 */

@@ -12,14 +12,17 @@ session_start();
 $idCont = intval($_SESSION['idContainer']);
 //recuperation of containers
 	/**
-	*Prepare the SQL query
+	*Prepare the SQL query and launch it
 	*/
-    $statement = $bdd->prepare("SELECT DISTINCT `geolat`, `geolong` FROM `Containers` WHERE id = '$idCont'");
-    $statement->execute();
+    $query = $bdd->prepare("SELECT DISTINCT `geolat`, `geolong` FROM `Containers` WHERE id = :idCont");
+
+    $query->execute(array(
+        'idCont'=>$idCont
+    ));
     /**
     *Result of query
     */
-    $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+    $results=$query->fetchAll(PDO::FETCH_ASSOC);
     /**
     *transform to JSON element
     */

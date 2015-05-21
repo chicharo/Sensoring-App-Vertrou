@@ -17,17 +17,21 @@ $idUsr = intval($_SESSION['id_user']);
 /**
 *The SQL query
 */
-$sql = " 
+$query = $bdd->prepare(' 
         SELECT value
         FROM Datas D, BelongsTo B, Containers C
-        WHERE D.id_container = '$idCont'
+        WHERE D.id_container = :idCont
         AND D.id_container = B.id_container
         AND D.id_container = C.id
         AND D.content_type_container = C.content_type
-        AND id_owner = '$idUsr'
-";
+        AND id_owner = :idUsr
+');
 
-$query = $bdd->query($sql);
+$query->execute(array(
+	'idCont'=>$idCont,
+	'idUsr'=>$idUsr
+));
+
 /**
 *Store the query in an array and encode her to JSON format 
 */

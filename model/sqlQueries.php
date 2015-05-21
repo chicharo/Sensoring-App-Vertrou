@@ -51,14 +51,17 @@ function sqlContainers($id){
 
     $id_owner = intval($id);
 /**
-* $sql contain the query
+* $query prepare and launch the SQL query
 */
-    $sql = "SELECT DISTINCT content_type FROM BelongsTo, Containers WHERE id_owner= '$id_owner' AND id_container = id";
+    $query = $bdd->prepare("SELECT DISTINCT content_type FROM BelongsTo, Containers WHERE id_owner= :id_owner AND id_container = id");
+
+    $query->execute(array(
+    'id_owner'=>$id_owner,
+    ));
 /**
 * $req launch the SQL query
 */
-    $req = $bdd->query($sql);
-    for($i = 0; $data = $req->fetch(); $i++){
+    for($i = 0; $data = $query->fetch(); $i++){
         $container_type[$i] = $data['content_type'];
     }
     return $container_type;

@@ -10,7 +10,7 @@
     */
 include('../model/connectionDB.php');
     
-$userN = mysql_real_escape_string($_POST['username']);
+$userN = htmlspecialchars($_POST['username']);
 $pass = htmlspecialchars($_POST['password']);
 
 //$userN = 'Etienne';
@@ -18,15 +18,20 @@ $pass = htmlspecialchars($_POST['password']);
 
 if($userN != null AND $pass != null){
 
-    $sql = "SELECT salt FROM Users WHERE username = '$userN'";
-    $reqSalt = $bdd->query($sql);
+    $reqSalt = $bdd->prepare("SELECT salt FROM Users WHERE username = :userN");
+    $reqSalt->execute(array(
+    'userN'=>$userN
+    ));
     $dataSalt = $reqSalt->fetch();
 
     $hash = sha1($dataSalt['salt'].$pass);
 
-    $sql = "SELECT id, username, password FROM Users WHERE username = '$userN' AND password = '$hash'";
-    $req = $bdd->query($sql);
-    $data = $req->fetch();
+    $query = $bdd->prepare("SELECT id, username, password FROM Users WHERE username = :userN AND password = :hash");
+    $query->execute(array(
+        'userN'=>$userN,
+        'hash'=>$hash
+    ));
+    $data = $query->fetch();
 
     if(($userN==$data['username'])&&($hash==$data['password'])){
 
