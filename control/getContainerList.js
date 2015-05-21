@@ -409,9 +409,25 @@ function displayElements(tabCheck){
     tabId =[];
     var bI = false;
     nb = 0;
+    bonus=0;
+    start = 0;
     //browse all elements
 
-      for(i=(page-1)*12; i<myElem.length && nb<12; i++){
+      for(j=0; j<myElem.length && start < (page-1)*8; j++){
+        if(j>0){
+          if(myElem[j][2]==myElem[j-1][2]){
+            bonus++;
+          }
+          else{
+            start++;
+          }
+        }
+        else{
+          start++;
+        }
+        
+      }
+      for(i=start+bonus; i<myElem.length && nb<8; i++){
         //Is the element already display on the Grid ?
         bI = false;
         for(j=0; j<tabId.length; j++){
@@ -559,8 +575,8 @@ function getLastValues(){
           }
 
   });
-  //setTimeout(getLastValues,10000);
-};
+  setTimeout(getLastValues,10000);
+}
    
         /**
          * Initiate the Charts of last values with highchart
