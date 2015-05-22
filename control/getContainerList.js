@@ -413,7 +413,7 @@ function displayElements(tabCheck){
     start = 0;
     //browse all elements
 
-      for(j=0; j<myElem.length && start < (page-1)*8; j++){
+      for(j=0; j<myElem.length && start < (page-1)*12; j++){
         if(j>0){
           if(myElem[j][2]==myElem[j-1][2]){
             bonus++;
@@ -427,7 +427,7 @@ function displayElements(tabCheck){
         }
         
       }
-      for(i=start+bonus; i<myElem.length && nb<8; i++){
+      for(i=start+bonus; i<myElem.length && nb<12; i++){
         //Is the element already display on the Grid ?
         bI = false;
         for(j=0; j<tabId.length; j++){
@@ -445,6 +445,7 @@ function displayElements(tabCheck){
           nb++;
         }
       }
+      getLastValues();
 }
 
 /**
@@ -514,11 +515,15 @@ function getLastValues(){
        * @param {} result the JSON file of the last Values
        */
       success: function(result){
+        //alert(tabId);
         result.forEach(function(d){
-          containersLastValues.push([d.id_container,d.content_type_container,d.value,d.date]);
-
+          for(i=0;i<tabId.length;i++){
+            if(d.id_container==tabId[i]){
+              containersLastValues.push([d.id_container,d.content_type_container,d.value,d.date]);
+            }
+          }
           });
-
+          
             for(i=0; i<containersLastValues.length; i++){
               id = containersLastValues[i][0]+containersLastValues[i][1];
               var intvalue = Math.floor( containersLastValues[i][2] );

@@ -6,18 +6,30 @@
         /**Is the container a double type?*/
         var isDoubleType = false;
         var json;
+        var boolColumn = false;
+
+        var chart;
+        //type of chart (line, column...)
+        var typeChart;
+        var columnOn = false;
 
         var last_value1;
+
+//handlingAjax();
 
 displayChart();
 
 function displayChart(){
     containerAllValues = [];
-
-    handlingAjax();
-    setTimeout(displayChart,20000);
+        handlingAjax();
+    //--------------------
+    
+    //handlingAjax();
+    setTimeout(displayChart,10000);
 }
+
 function handlingAjax(){
+
 
         $.ajax({
       dataType: "json",
@@ -33,7 +45,7 @@ function handlingAjax(){
         json=result;
         result.forEach(function(d){
           containerAllValues.push([d.value,d.content_type_container,d.name, d.date]);
-          
+        
           
           });
         
@@ -51,13 +63,8 @@ function handlingAjax(){
         title1 = containerAllValues[0][2];
 
         //initialise the table of dates
-        datesTab[0] = containerAllValues[0][3].substring(0, 16);
-        var j =0;
         for(i=0;i<containerAllValues.length;i++){
-            if(datesTab[j-1] !=  containerAllValues[i][3].substring(0, 16)){
-                datesTab[j] =  containerAllValues[i][3].substring(0, 16);
-                j++;
-            }
+            datesTab[i] =  containerAllValues[i][3];  
         }
 
             if(isDoubleType==true){
@@ -76,10 +83,10 @@ function handlingAjax(){
                 for(i=0;i<containerAllValues.length;i++){
                     if(containerAllValues[i][1]==type1){
 
-                        dataTab.push([Math.floor(containerAllValues[i][0]), containerAllValues[i][3].substring(0, 16)]);
+                        dataTab.push([Math.floor(containerAllValues[i][0]), containerAllValues[i][3]]);
                     }
                     else{
-                        dataTab2.push([Math.floor(containerAllValues[i][0]), containerAllValues[i][3].substring(0, 16)]);
+                        dataTab2.push([Math.floor(containerAllValues[i][0]), containerAllValues[i][3]]);
 
                     }
                 }
@@ -143,8 +150,20 @@ function handlingAjax(){
                     bool = false;
                 }
 
+                if(columnOn == true){
+                    typeChart = 'column';
+                }
+                else{
+                    typeChart = 'line';
+                }
+
                // initiateTabTwo();
                 initiateDetailsTwo(type1, type2, title, dataTabFin1, dataTabFin2, datesTab);
+
+                if(columnOn == true){
+                    changeChartType(true);                
+                }
+
             }
             else{
                 title = containerAllValues[0][2];
@@ -183,7 +202,7 @@ function handlingAjax(){
 
 
   });
-} 
+}
 
     function initiateGauge(){
         var max_value1;
@@ -262,8 +281,7 @@ function handlingAjax(){
      */
     function initiateDetailsTwo(type1, type2, title, dataTab, dataTab2, datesTab) {
 
-        var chart;
-    $('#contChart').highcharts({
+        $('#contChart').highcharts({
         chart: {
             type: 'line'
         },
@@ -492,7 +510,7 @@ $.ajax({
 
 function changeChartType(redraw) {
     var type = 'line';
-
+    columnOn = true;
     var column = document.getElementById('radio2');
     var line = document.getElementById('radio1');
     //var idContSession;
@@ -501,9 +519,10 @@ function changeChartType(redraw) {
 
     if(column.checked)
     {
-        type="column";       
+        type="column";      
     chart = $('#contChart').highcharts();     
     var seriesOptions = new Array(chart.series.length);
+    boolColumn = true;
 
     for (i = 0;i <chart.series.length;i++) {         
         var series = chart.series[i];
@@ -530,7 +549,6 @@ function changeChartType(redraw) {
     chart.currentType = type;
     }
     else{
-
         document.location.href="../vue/pageDetail.php?id="+idContSession+"";
     }
 }
