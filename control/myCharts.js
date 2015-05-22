@@ -25,7 +25,7 @@ function displayChart(){
     //--------------------
     
     //handlingAjax();
-    setTimeout(displayChart,10000);
+    setTimeout(displayChart,20000);
 }
 
 function handlingAjax(){
@@ -195,8 +195,9 @@ function handlingAjax(){
             }
             initiateTable();
             initiateDetail();
-            initiateGauge();
-
+            if(isDoubleType != true){
+                initiateGauge();
+            }
     }
 
 

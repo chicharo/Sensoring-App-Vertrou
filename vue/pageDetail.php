@@ -114,10 +114,10 @@
                  <div id="page-content-wrapper">
                     <a href="#menu-toggle" class="glyphicon glyphicon-th-list" id="menu-toggle"></a>
                <hr>
-                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-9">
                     <div class="container-fluid">
                     	<!--Division which contain the graph -->
-                    	<div id="contChart"  width ='100%' style="height:600px ; min-width: 310px;margin: 0 auto">
+                    	<div id="contChart"  width ='100%' style="height:500px ; min-width: 310px;margin: 0 auto">
 
                     	</div>
     				</div>
