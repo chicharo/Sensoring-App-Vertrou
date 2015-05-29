@@ -9,7 +9,9 @@ function displayTable(){
   initiateDetail();
   init_map();
   $.ajax({
-      url: '../model/countAllValues.php',
+      type:"POST",
+      url: '../model/sqlQueries.php',
+      data:'myFunction='+'countAllValues',
 
       success: function(c){
         lenghtTable = Math.floor(c);
@@ -49,12 +51,13 @@ function initiateTable(){
     if(isInitiate==false){
     $.ajax({
 
-      dataType: "json",
-      url: '../model/getDetail.php',
-
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+'getDetail',
       success: function(result){
         var text;
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
           text = document.createTextNode(d.details);
         });
 
@@ -70,8 +73,9 @@ function initiateTable(){
   var longitude;
   var latitude; 
   $.ajax({
-      dataType: "json",
-      url: '../model/getLoc.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+'getLoc',
       /**
        * If the ajax success, we launch this method
        * This function use the JSON file of localisation of container and store this localisation in two variables for the longitude and latitude
@@ -79,8 +83,8 @@ function initiateTable(){
        * @param {} result
        */
       success: function(result){
-        
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
           longitude = d.geolong;
           latitude = d.geolat;
         

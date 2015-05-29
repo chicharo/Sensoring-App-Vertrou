@@ -1,16 +1,15 @@
 <?php
 /**
-*@author Olivier Peurichard & Etienne Marois
-*
-* return in JSON format the geolocalisation of the current container.
+*return in JSON format the geolocalisation of the current container.
 */
-$adoc;
-include('connectionDB.php');
 
-session_start();
+function getLoc(){
+    include('connectionDB.php');
 
-$idCont = intval($_SESSION['idContainer']);
-//recuperation of containers
+    session_start();
+
+    $idCont = intval($_SESSION['idContainer']);
+    //recuperation of containers
 	/**
 	*Prepare the SQL query and launch it
 	*/
@@ -30,7 +29,7 @@ $idCont = intval($_SESSION['idContainer']);
 
     echo $json;
 
-$bdd = null;
-
+    $bdd = null;
+}
 
 ?>

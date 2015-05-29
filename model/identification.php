@@ -24,7 +24,7 @@ if($userN != null AND $pass != null){
     ));
     $dataSalt = $reqSalt->fetch();
 
-    $hash = sha1($dataSalt['salt'].$pass);
+    $hash = hash('sha512', $dataSalt['salt'].$pass);
 
     $query = $bdd->prepare("SELECT id, username, password FROM Users WHERE username = :userN AND password = :hash");
     $query->execute(array(

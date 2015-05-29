@@ -20,13 +20,12 @@ var k =0;
 
 var nb_page = 0;
 
-var items = [];
-
 $(document).ready(function(){
   
     $.ajax({
-      dataType: "json",
-      url: '../model/getContainers.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data:'myFunction='+'getContainers',
       /**
        * If the ajax success, we launch this method
        * This function use the JSON file and store it in the table items
@@ -35,10 +34,10 @@ $(document).ready(function(){
        */
       success: function(result){
         grid = $('.grid-stack').data('gridstack');
-        
-        result.forEach(function(d){
+
+        res = JSON.parse(result);
+        res.forEach(function(d){
           items.push([d.id,d.content_type,d.name,d.max_value,d.alert_value]);
-        
         });
 
         for(i=0; i<items.length;i++){
@@ -506,8 +505,9 @@ function initiatePagination(){
 function getLastValues(){
   var containersLastValues = [];
   $.ajax({
-      dataType: "json",
-      url: '../model/getLastValues.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+'getLastValues',
       /**
        * If ajax succes,, this function is launch
        * This function use the JSON file and store it in the table containerLastValue
@@ -515,8 +515,8 @@ function getLastValues(){
        * @param {} result the JSON file of the last Values
        */
       success: function(result){
-        //alert(tabId);
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
           for(i=0;i<tabId.length;i++){
             if(d.id_container==tabId[i]){
               containersLastValues.push([d.id_container,d.content_type_container,d.value,d.date]);

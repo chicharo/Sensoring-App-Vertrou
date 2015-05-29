@@ -6,6 +6,13 @@
 */
 $adoc;
 
+if (isset($_POST['myFunction']) && $_POST['myFunction'] != ''){
+    $_POST['myFunction']();
+}
+/**
+* Return in a JSON format all the values from the current container of the current user.
+*/
+function getAllValues(){
 //connection to database
 include('connectionDB.php');
 
@@ -39,8 +46,8 @@ $data = array();
 $data = $query->fetchAll();
 
     echo json_encode($data);
-    
+
 $bdd = null;
 
-
+}
 ?>

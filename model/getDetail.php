@@ -1,11 +1,8 @@
 <?php
 /**
-*@author Olivier Peurichard & Etienne Marois
-*
 * Return in a JSON format all the values from the current container of the current user.
 */
-$adoc;
-
+//function getDetail(){
 //connection to database
 include('connectionDB.php');
 
@@ -40,7 +37,7 @@ $data = $query->fetchAll();
 
     echo json_encode($data);
     
-$bdd = null;
-
+    $bdd = null;
+//}
 
 ?>

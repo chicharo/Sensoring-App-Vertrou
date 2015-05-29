@@ -32,8 +32,9 @@ function handlingAjax(){
 
 
         $.ajax({
-      dataType: "json",
-      url: '../model/getAllValues.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+ 'getAllValues',
       /**
        * If the ajax success, we launch this method
        * This function use the JSON file and store it in the table containerAllValues
@@ -42,8 +43,8 @@ function handlingAjax(){
        * @return the table containerAllValues which contain the values (and other specifications) of the container(s)
        */
       success: function(result){
-        json=result;
-        result.forEach(function(d){
+        json=JSON.parse(result);
+        json.forEach(function(d){
           containerAllValues.push([d.value,d.content_type_container,d.name, d.date]);
         
           
@@ -63,8 +64,16 @@ function handlingAjax(){
         title1 = containerAllValues[0][2];
 
         //initialise the table of dates
-        for(i=0;i<containerAllValues.length;i++){
+        /*for(i=0;i<containerAllValues.length;i++){
             datesTab[i] =  containerAllValues[i][3];  
+        }*/
+        datesTab[0] = containerAllValues[0][3];
+        var j =0;
+        for(i=0;i<containerAllValues.length;i++){
+            if(datesTab[j-1] !=  containerAllValues[i][3]){
+                datesTab[j] =  containerAllValues[i][3];
+                j++;
+            }
         }
 
             if(isDoubleType==true){
@@ -209,12 +218,14 @@ function handlingAjax(){
         var max_value1;
         $.ajax({
 
-      dataType: "json",
-      url: '../model/getDetail.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+ 'getDetail',
 
       success: function(result){
         var text;
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
             max_value1 = d.max_value;
         });
 
@@ -231,13 +242,15 @@ function handlingAjax(){
     function initiateDetail(){
     if(myBool==false){
     $.ajax({
-
-      dataType: "json",
-      url: '../model/getDetail.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+ 'getDetail',
 
       success: function(result){
         var text;
-        result.forEach(function(d){
+        res = JSON.parse(result);
+
+        res.forEach(function(d){
             max_value1 = d.max_value;
           text = document.createTextNode(d.details);
         });
@@ -454,8 +467,9 @@ function init_map() {
   var longitude;
   var latitude; 
   $.ajax({
-      dataType: "json",
-      url: '../model/getLoc.php',
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+ 'getLoc',
       /**
        * If the ajax success, we launch this method
        * This function use the JSON file of localisation of container and store this localisation in two variables for the longitude and latitude
@@ -463,8 +477,8 @@ function init_map() {
        * @param {} result
        */
       success: function(result){
-        
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
           longitude = d.geolong;
           latitude = d.geolat;
         
@@ -495,14 +509,14 @@ function init_map() {
 var idContSession;
 
 $.ajax({
-
-      dataType: "json",
-      url: '../model/getSessionIdCont.php',
-
+      type: "POST",
+      url: '../model/sqlQueries.php',
+      data: 'myFunction='+'getSessionIdCont',
+      
       success: function(result){
         
-        
-        result.forEach(function(d){
+        res = JSON.parse(result);
+        res.forEach(function(d){
           idContSession =d.id;
         
         });
