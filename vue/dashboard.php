@@ -88,6 +88,8 @@ if(isset($_SESSION['id_user'])){
                             if(isset($container_type) AND $container_type !=null){
                                 ?>
                                 <label class="control-label">
+                                    <!-- It is the checkbox element, when you change by a click the state of this,
+                                    it launch the function displayContainersAll in the JavaScript file -->
                                     <input type="checkbox" checked="checked" onChange="displayContainersAll(this)">
                                     All
                                 </label>

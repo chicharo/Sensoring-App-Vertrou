@@ -18,22 +18,13 @@ $pass = htmlspecialchars($_POST['password']);
 
 if($userN != null AND $pass != null){
 
-    $reqSalt = $bdd->prepare("SELECT salt FROM Users WHERE username = :userN");
-    $reqSalt->execute(array(
-    'userN'=>$userN
-    ));
-    $dataSalt = $reqSalt->fetch();
-
-    $hash = hash('sha512', $dataSalt['salt'].$pass);
-
-    $query = $bdd->prepare("SELECT id, username, password FROM Users WHERE username = :userN AND password = :hash");
+    $query = $bdd->prepare("SELECT id, username, password FROM Users WHERE username = :userN");
     $query->execute(array(
         'userN'=>$userN,
-        'hash'=>$hash
     ));
     $data = $query->fetch();
 
-    if(($userN==$data['username'])&&($hash==$data['password'])){
+    if(($userN==$data['username'])&&(password_verify($pass,$data['password']))){
 
         $_SESSION['id_user']=$data['id']; //generation of sessions variables - id of client
         $_SESSION['username'] = $data['username']; //generation of sessions variables - login of client

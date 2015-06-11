@@ -22,16 +22,11 @@ var nb_page = 0;
 
 $(document).ready(function(){
   
+    //we pick the data from the database
     $.ajax({
       type: "POST",
       url: '../model/sqlQueries.php',
       data:'myFunction='+'getContainers',
-      /**
-       * If the ajax success, we launch this method
-       * This function use the JSON file and store it in the table items
-       * @method success
-       * @param {} result the JSON file
-       */
       success: function(result){
         grid = $('.grid-stack').data('gridstack');
 
@@ -40,13 +35,16 @@ $(document).ready(function(){
           items.push([d.id,d.content_type,d.name,d.max_value,d.alert_value]);
         });
 
+        //for each tank
         for(i=0; i<items.length;i++){
           
+            //if the tank contains two different liquids
             if(i<(items.length-1) && (items[i][0]==items[i+1][0])){
             
-            
+              //cretion of the element
               element = document.createElement("div");
               element.className ="grid-stack-item";
+              // add the tank's name in the element an the other things
               element.id = "gridstackitem" + items[i][0];
 
               content = document.createElement("div");
@@ -99,7 +97,7 @@ $(document).ready(function(){
               divAlert.id = "alert"+items[i][0];
 
 
-              text = document.createTextNode("Be careful bro, this tank is low !");
+              text = document.createTextNode("This tank is low, be careful !");
               divAlert.appendChild(text);
 
 
@@ -117,7 +115,7 @@ $(document).ready(function(){
               myElem.push([items[i+1][1],element, items[i+1][0]]);
 
 
-
+              //add the element in the grid, the other params are for the gridstack settings
               grid.add_widget(element,1,1,3,4,true);
               
               initiateDoubleChart(div1.getAttribute('id'),items[i][1],items[i][3], items[i][4],div2.getAttribute('id'),items[i+1][1],items[i+1][3], items[i+1][4]);
@@ -125,10 +123,11 @@ $(document).ready(function(){
               i++;
               k++;
               
-            }
+            }//end of the if with double type
 
+            //if the tank contain one type of liquid
             else{
-             
+             //the same but without the concatenation of tank's names with the simple chart, etc...
               element = document.createElement("div");
               element.className ="grid-stack-item";
               element.id = "gridstackitem" + items[i][0];
@@ -164,7 +163,7 @@ $(document).ready(function(){
               divAlert.id = "alert"+items[i][0];
 
 
-              text = document.createTextNode("Be careful bro, this tank is low !");
+              text = document.createTextNode("This tank is low, be careful !");
               divAlert.appendChild(text);
 
 
@@ -276,17 +275,27 @@ function displayContainers(type){
  * @param {} cb Boolean - The result of "Is the box checked?"
  */
 function displayContainersAll(cb){
+  //change cb to a boolean
   checkB = cb.checked;
+  //store the checkB boolean in bAll. In the  function which display the elements
+  //with the two-dimensional array. We will check if "All" is checked (bAll == true)
+  //before the display and if yes, we will display all the elements.
   bAll = checkB;
 
+  //istanciate the two-dimensional array we evoke above
   createTabC(bTabInstanciate);
+  //with this boolean, we will know if the table is already instantiated.
   bTabInstanciate = true;
 
-
+  //if "All" is checked
   if(checkB == true){
+    //we display all the elements
     displayAll(1);
   }
+  // if "All" is not checked
   else{
+    //we display the elements with the type checked at True
+    //in the two-dimensional array "tabCheckB"
     displayElements(tabCheckB);
   }
 
@@ -295,25 +304,29 @@ function displayContainersAll(cb){
 
         
 /**
- * This method is launch when the user click on a element type in the Checkbox. It launch methods for diplay the good elements
+ * This method is launch when the user click on a element type in the Checkbox.
+ *It launch methods for diplay the good elements
  * @method displayContainersCheckbox
  * @param {} type Type of the container
  * @param {} cb Boolean - The result of "Is the box checked?"
  */
 function displayContainersCheckbox(type, cb){
-
+  //change cb to a boolean
   checkB = cb.checked;
-
+  //istanciate the two-dimensional array we evoke above
   createTabC(bTabInstanciate);
   bTabInstanciate = true;
   
   //add to tabCheck the change
+  //We browse the two-dimensional array "tabCheckB" we evoke above
     for(i=0;i<tabCheckB.length;i++){
+      //if the type of the table is the same type of the checkBox
       if(type==tabCheckB[i][0]){
+          //We put the check about this type to the actual check of the checkbox.
           tabCheckB[i][1] = checkB;
       }
     }
-  //laucnh the function which display the elements
+  //laucnh the function which display the elements with the array "tabCheckB"
   displayElements(tabCheckB);
  
 }
@@ -354,21 +367,25 @@ function createTabC(b){
 /**
  * This method display all the elements depending on the checkbox
  * @method displayElements
- * @param {} tabCheck 
+ * @param {} tabCheck The two-dimensional array containing all the types and
+ *on the same line of these types if they are checked
  */
 function displayElements(tabCheck){
 
+  //is the checkBox "All" checked?
   if(bAll==true){
+    //display all the elements
     displayAll(1);
   }
   else{
-     //beginning of the handling
-  grid.remove_all();
-  tabId =[];
-  var bC = false;
-  var bI = false;
-  //browse all elements
-  for(i=0; i<myElem.length; i++){
+     // remove all the elements in the grid
+    grid.remove_all();
+    //initialise the tab which contain the elements added in the grid
+    tabId =[];
+    var bC = false;
+    var bI = false;
+    //browse all elements
+    for(i=0; i<myElem.length; i++){
       bC = false;
       //Is the type of Element is set to true ?
       for(j=0;j<tabCheck.length;j++){
@@ -381,7 +398,7 @@ function displayElements(tabCheck){
       //Is the element already display on the Grid ?
       bI = false;
       for(j=0; j<tabId.length; j++){
-
+        //if the element is already display on the grid
         if(myElem[i][2] == tabId[j]){
           bI = true;
           break;
@@ -389,14 +406,14 @@ function displayElements(tabCheck){
       }
 
       //if all conditions are fulfilled we can add the element to the grid
+      //If the element's type is checked at true in the two-dimensional array
       if(bC == true && bI == false){
         grid.add_widget(myElem[i][1]);
         tabId.push(myElem[i][2]);
       }
-
+    }
   }
-  }
-  }
+}
 
 /**
   * Display all the documents
